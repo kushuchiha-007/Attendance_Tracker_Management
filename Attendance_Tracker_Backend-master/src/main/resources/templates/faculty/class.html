@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Faculty and Course Information - Student Attendance System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2, p, label {
+            color: #333;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Student Attendance System</h1>
+</header>
+
+<div class="container">
+    <div>
+        <!-- Display faculty's name and ID -->
+        <h2>Faculty Information:</h2>
+        <p th:text="${faculty.name + ' (ID: ' + faculty.id + ')'}">Faculty Name and ID</p>
+    </div>
+
+    <div>
+        <!-- Display course information -->
+        <h2>Course Information:</h2>
+        <p>
+            <strong>Course Name:</strong> <span th:text="${course.name}"></span><br>
+            <strong>Course Code:</strong> <span th:text="${course.code}"></span>
+        </p>
+    </div>
+
+    <h1>Student List</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th> <!-- New column for buttons -->
+        </tr>
+        <tr th:each="student : ${studentList}">
+            <td th:text="${student.id}">Student ID</td>
+            <td th:text="${student.name}">Student Name</td>
+            <td>
+                <form th:action="@{'/faculty/attendance/' + ${student.id} + '/' + ${course.code}}" method="get">
+                    <button type="submit">View Attendance</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
